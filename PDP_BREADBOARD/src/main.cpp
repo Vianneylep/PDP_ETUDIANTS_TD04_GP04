@@ -1,23 +1,31 @@
 #include <Arduino.h>
 #include <DHT.h>
+#include <DHT_U.h>
+
 // Define the pins that we will use
 #define SENSOR 33
 #define LED 26
 
+#define DHTTYPE DHT11
 
- #define DHTPIN 3
-
- #define DHTTYPE DHT11
-
-DHT dht(DHTPIN, DHTTYPE);
+DHT dht(SENSOR, DHTTYPE);
 
 void setup() {
   // put your setup code here, to run once:
   pinMode(LED, OUTPUT);
+
+Serial.begin(9600); 
+
   dht.begin();
-  Serial.println("Temperature = " + String(dht.readTemperature())+" °C");
-  Serial.println("Humidite = " + String(dht.readHumidity())+" %");
+  
+  float humidite = dht.readHumidity();
+  float temperature = dht.readTemperature();
+  Serial.print("Humidité: "); 
+  Serial.println(humidite);
+  Serial.print("Température:"); 
+  Serial.println(temperature);
   esp_sleep_enable_timer_wakeup(5000000);
   esp_deep_sleep_start();
 
 }
+void loop() {}
