@@ -15,11 +15,9 @@ void setup() {
   // put your setup code here, to run once:
   pinMode(LED, OUTPUT);
   dht.begin();
-}
-
-void loop() {
-
- Serial.println("Temperature = " + String(dht.readTemperature())+" °C");
+  Serial.println("Temperature = " + String(dht.readTemperature())+" °C");
   Serial.println("Humidite = " + String(dht.readHumidity())+" %");
-  delay(5000);
+  esp_sleep_enable_timer_wakeup(5000000);
+  esp_deep_sleep_start();
+
 }
